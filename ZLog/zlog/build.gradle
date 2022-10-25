@@ -1,7 +1,9 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'maven-publish'
 }
+
 
 android {
     namespace 'com.jasonzhou.zlog'
@@ -10,7 +12,8 @@ android {
     defaultConfig {
         minSdk 21
         targetSdk 32
-
+        versionCode 1
+        versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -27,6 +30,24 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+}
+
+afterEvaluate {
+    publishing {
+//    配置maven-publishing插件的输出物
+        publications {
+            maven(MavenPublication) {
+                groupId = 'com.github.jasonzhou'
+                artifactId = 'zlog'
+                version = '1.0.0'
+            }
+        }
+        repositories {
+            maven {
+                url = uri('../repo')
+            }
+        }
     }
 }
 
